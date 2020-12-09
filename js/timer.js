@@ -82,47 +82,81 @@ class CountdownTimer {
   constructor ({selector, targetDate}) {
     this.timer = document.querySelector(selector)
     this.targetDate = targetDate
-    this.days = document.querySelector('[data-value="days"]')
-    this.hours = document.querySelector('[data-value="hours"]')
-    this.mins = document.querySelector('[data-value="mins"]')
-    this.secs = document.querySelector('[data-value="secs"]')
-    this._distance = null;
+    this.days = this.timer.querySelector('[data-value="days"]')
+    this.hours = this.timer.querySelector('[data-value="hours"]')
+    this.mins = this.timer.querySelector('[data-value="mins"]')
+    this.secs = this.timer.querySelector('[data-value="secs"]')
+    this.distance = null;
+    this.id = ''
   }
   promotion() {
-    setInterval(() => {
-      let distance = this.countDown - this.getCurrentTime()
-      this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      this.mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      this.secs = Math.floor((distance % (1000 * 60)) / 1000);
+      this.id = setInterval(() => {
+      let distance = this.targetDate - this.getCurrentTime()
+      this.days.textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
+      this.hours.textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      this.mins.textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      this.secs.textContent = Math.floor((distance % (1000 * 60)) / 1000);
       this.displayData()
       this.distance = distance;
     }, 1000) 
   }
   getCurrentTime() {
-    return this.targetDate;
+    return new Date()
   }
   displayData() {
-    this.daysRef.textContent = this._days;
-    this.hoursRef.textContent = this._hours;
-    this.minsRef.textContent = this._mins;
-    this.secsRef.textContent = this._secs;
-
     if (this.distance < 0) {
-      document.body.innerHTML = 'Вы профукали свое время'
-      this.clearInterval(this.promotion())
+      clearInterval(this.id)
     } 
   }
   init() {
     return this.promotion()
   }
 }
-
 const date = new CountdownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Jul 17, 2019'),
+  targetDate: new Date('Jul 17, 2021'),
 });
-// CountdownTimer.init()
+date.promotion()
 
-console.log(date);
+
+class moveTimer {
+  constructor ({selector, targetDate}) {
+    this.timer = document.querySelector(selector)
+    this.targetDate = targetDate
+    this.days = this.timer.querySelector('[data-value="days"]')
+    this.hours = this.timer.querySelector('[data-value="hours"]')
+    this.mins = this.timer.querySelector('[data-value="mins"]')
+    this.secs = this.timer.querySelector('[data-value="secs"]')
+    this.distance = null;
+    this.id = ''
+  }
+  movement() {
+      this.id = setInterval(() => {
+      let distance = this.targetDate - this.getCurrentTime()
+      this.days.textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
+      this.hours.textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      this.mins.textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      this.secs.textContent = Math.floor((distance % (1000 * 60)) / 1000);
+      this.displayData()
+      this.distance = distance;
+    }, 1000) 
+  }
+  getCurrentTime() {
+    return new Date()
+  }
+  displayData() {
+    if (this.distance < 0) {
+      clearInterval(this.id)
+    } 
+  }
+  init() {
+    return this.movement()
+  }
+}
+const result = new moveTimer({
+  selector: '#timer-2',
+  targetDate: new Date('Jul 17, 2025'),
+});
+result.movement()
+
 
