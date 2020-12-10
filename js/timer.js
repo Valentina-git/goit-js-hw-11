@@ -116,47 +116,14 @@ const date = new CountdownTimer({
   selector: '#timer-1',
   targetDate: new Date('Jul 17, 2021'),
 });
-date.promotion()
-
-
-class moveTimer {
-  constructor ({selector, targetDate}) {
-    this.timer = document.querySelector(selector)
-    this.targetDate = targetDate
-    this.days = this.timer.querySelector('[data-value="days"]')
-    this.hours = this.timer.querySelector('[data-value="hours"]')
-    this.mins = this.timer.querySelector('[data-value="mins"]')
-    this.secs = this.timer.querySelector('[data-value="secs"]')
-    this.distance = null;
-    this.id = ''
-  }
-  movement() {
-      this.id = setInterval(() => {
-      let distance = this.targetDate - this.getCurrentTime()
-      this.days.textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
-      this.hours.textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      this.mins.textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      this.secs.textContent = Math.floor((distance % (1000 * 60)) / 1000);
-      this.displayData()
-      this.distance = distance;
-    }, 1000) 
-  }
-  getCurrentTime() {
-    return new Date()
-  }
-  displayData() {
-    if (this.distance < 0) {
-      clearInterval(this.id)
-    } 
-  }
-  init() {
-    return this.movement()
-  }
-}
-const result = new moveTimer({
+const date2 = new CountdownTimer({
   selector: '#timer-2',
   targetDate: new Date('Jul 17, 2025'),
 });
-result.movement()
+date.promotion()
+date2.promotion()
+
+
+
 
 
